@@ -1,0 +1,95 @@
+.imagenesLogin {
+    text-align: right;
+    margin-bottom: 0px;
+}
+
+
+.imagenesLogin img {
+    width: 100px;
+    margin-right: 2px;
+}
+
+
+.logo {
+    float: left;
+    margin-right: 10px;
+}
+
+.navbar {
+    background-color: #4CAF50;
+    overflow: hidden;
+    text-align: center;
+    clear: both;
+}
+
+
+.navbar a {
+    display: inline-block;
+    color: white;
+    text-align: center;
+    padding: 14px 20px;
+    text-decoration: none;
+}
+
+
+.navbar a:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+.container{
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius:5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+form{
+    margin-top: 10px;
+    margin-right: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="tel"],
+input[type="date"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+button {
+    padding: 10px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+body{
+    font-family: Arial,sans-serif;
+    background-color: #f4f4f4;
+}
+
+input[type=submit]{
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius:5px;
+    cursor:pointer;
+    
+}
+
+input[type="submit"]:hover{
+    background-color:#555;
+}

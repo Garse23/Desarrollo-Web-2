@@ -1,0 +1,36 @@
+.Encabezado {
+    margin-bottom: 0px;
+    position: fixed;
+    top: 0; /* Mantiene el elemento en la parte superior */
+    width: 99%; /* Ocupa todo el ancho disponible */
+    background-color: #4CAF50; /* Fondo blanco para destacar */
+    z-index: 1000; /* Asegura que esté por encima de otros elementos */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex; /* Utilizar flexbox para alinear verticalmente */
+    align-items: center; /* Centrar verticalmente el contenido */
+    justify-content: flex-end; /* Alinear elementos al final */
+}
+
+.Encabezado img {
+    width: 100px;
+    margin-right: 2px;
+}
+.logo {
+    margin-right: auto; /* Mover el logo a la izquierda */
+    margin-left: 10px; /* Espacio entre el logo y los botones */
+}
+.product-link {
+    color: #ffffff; 
+    border: 2px solid #ffffff; 
+    border-radius: 5px;
+    padding: 10px 20px; /* Ajuste del padding */
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s, color 0.3s;
+    margin-right: 10px;
+}
+
+.product-link:hover {
+    background-color: #ffffff; 
+    color: #4CAF50; 
+}
