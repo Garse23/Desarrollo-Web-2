@@ -16,7 +16,7 @@ paypal.Buttons({
     onApprove: function (data, actions) {
         actions.order.capture().then(function (detalles) {
             console.log(detalles);
-            let url = 'http://localhost:8080/CampoVerde(10)/ProcesarVenta'
+            let url = 'http://localhost:8080/CampoVerde(11)/ProcesarVenta'
 
              return fetch(url,{
                 method:'post',
