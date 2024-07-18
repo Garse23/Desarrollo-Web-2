@@ -24,8 +24,10 @@ public class ProductoEmpleado extends HttpServlet {
 
         ProductoDAO productoDAO = new ProductoDAOImpl();
         List<Producto> productos = null;
+        Producto producto = new Producto();
+        producto.setIdhabilitado(1);
         try {
-            productos = productoDAO.obtenerProductosHabilitados();
+            productos = productoDAO.obtenerProductos(producto);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -59,7 +61,7 @@ public class ProductoEmpleado extends HttpServlet {
         out.println("</thead>");
         out.println("<tbody>");
 
-        for (Producto producto : productos) {
+        for (Producto p : productos) {
             out.println("<tr>");
             out.println("<td>" + producto.getIdProducto() + "</td>");
             out.println("<td>" + producto.getNomProducto() + "</td>");

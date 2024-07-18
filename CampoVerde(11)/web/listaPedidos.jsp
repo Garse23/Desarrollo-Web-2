@@ -41,13 +41,13 @@
 
         <!-- Custom styles for this page -->
         <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-        
+
     </head>
-    
+
     <body id="page-top">
         <%if (rolUsuario==null || rolUsuario==2 ||rolUsuario==1) {%>
         <%response.sendRedirect("index.jsp");%>
-        
+
     </body>
     <%}else if(rolUsuario==4 || rolUsuario==1){
     %>
@@ -76,7 +76,7 @@
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
-<% if(rolUsuario==1||rolUsuario==4){%>
+            <% if(rolUsuario==1||rolUsuario==4){%>
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#ListaEmpleado"
                    aria-expanded="true" aria-controls="collapseTwo">
@@ -219,7 +219,6 @@
                                             <th>Proveedor</th>
                                             <th>Estado</th> 
                                             <th>Detalles</th>
-                                            <th>Eliminar</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -238,7 +237,11 @@
                                                         break;
                                                     case 2:
                                                 %>
-                                                <button type="button" class="btn btn-warning"><%=pedido.getEstado()%></button>
+                                                <form action="ActualizarPedido" method="post">
+                                                    <input type="hidden" name="estado" id="estado" value="2">
+                                                    <input type="hidden" name="id" id="id" value="<%=pedido.getId()%>">
+                                                    <button type="submit" class="btn btn-warning"><%=pedido.getEstado()%></button>
+                                                </form>
                                                 <%
 
                                                         break;
@@ -257,12 +260,7 @@
                                                     <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#ModalDetallePedido<%=pedido.getId()%>">Detalles</button>
                                                 </form>
                                             </td>
-                                            <td>
-                                                <form action="" method="post"> 
-                                                    <input type="hidden" name="idProducto" value=""> 
-                                                    <button type="submit" class="btn btn-dark">Eliminar</button> 
-                                                </form>
-                                            </td>
+                                            
                                         </tr>
                                         <%}%>
 
@@ -305,15 +303,15 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">¿Listo para salir?</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-body">Seleccione "Cerrar Sesión" a continuacion si esta listo para terminar su sesion actual</div>
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+                    <a class="btn btn-primary" href="CerrarSesion">Cerrar Sesión</a>
                 </div>
             </div>
         </div>
@@ -337,7 +335,7 @@
     <script src="js/demo/datatables-demo.js"></script>
     <% for (Pedido pedido : pedidos) { %>
     <div class="modal fade" id="ModalDetallePedido<%=pedido.getId()%>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-         <div class="modal-dialog">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Detalles</h1>
@@ -376,6 +374,23 @@
                             <label for="horaenvio">Hora de Recibido: <%=pedido.gethRecibido()%></label>
                         </div>
                         <%}%>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="ModalProveedor<%=pedido.getIdusuario()%>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content text-center">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Proveedor</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="nombre">Empresa: <%=pedido.getRsocial()%></label>
+                        </div>
                     </form>
                 </div>
             </div>

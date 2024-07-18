@@ -20,6 +20,8 @@
             src="https://www.paypal.com/sdk/js?client-id=AUGAqFV6WctWmIDjXQeTJMfpv7UTtPne1C3AjHQnYDVMxjau5izB44Me8tOV90Ktm2ubUCSZe5BGJbju&currency=USD"
         ></script>
         <script src="js/carrito.js" ></script>
+        <link rel="stylesheet" href="css/stylesindex.css" />
+        <link rel="stylesheet" href="css/CarritoSinLogear.css" />
     </head>
     <% String nombreUsuario = (String) session.getAttribute("nombreUsuario");
    Integer rolUsuario = (Integer) session.getAttribute("rolUsuario");
@@ -32,67 +34,93 @@
     %>
     <body>
         <header>
-            <nav class="navbar navbar-dark">
-                <div class="row w-100 align-items-center text-end">
-                    <div class="col-3 text-start">
-                        <a href="index.jsp"><img src="imagenes/logo.png" alt="logo" class="" style="width:100px"></a>
+            <div class="container-hero">
+                <div class="container hero">
+                    <div class="customer-support">
+
                     </div>
-                    <%if (IdUsuario != null){ %>
-                    <div class="col-2 offset-6">
-                        <div class="dropdown">
-                            <button class="btn btn-light" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <img src="imagenes/person-fill.svg" alt="alt" style="width: 30px"/>
-                            </button>
-                            <ul class="dropdown-menu" style="right:0; left: auto">
-                                <li><span class="dropdown-item-text">Usuario: <%=nombreUsuario%></span></li>
-                                <li><a class="dropdown-item" href="Chat.jsp">Chat</a></li>
-                                <li><a class="dropdown-item" href="Foros.jsp">Foro</a></li>
-                                    <% if (rolUsuario != null) {
-                                            switch(rolUsuario) {
-                                                case 1:
-                                    %>
-                                <li><a class="dropdown-item" href="paginaEmpleado.jsp">Empleado</a></li>
-                                    <%
-                                                    break;
-                                                case 2:
-                                    %>
-                                <li><a class="dropdown-item" href="Proveedor.jsp">Proveedor</a></li>
-                                    <%
-                                                    break;
-                                                case 4:
-                                    %>
-                                <li><a class="dropdown-item" href="paginaEmpleado.jsp">Empleado</a></li>
-                                <li><a class="dropdown-item" href="Proveedor.jsp">Proveedor</a></li>
-                                    <%
-                                    default:%>
-                                <li><a class="dropdown-item text-bg-danger" href="CerrarSesion">Cerrar Sesión</a></li>
-                                    <%
+
+                    <div class="container-logo">
+                        <img src="img/logoCampo.png" style="width: 90px;" alt="">
+                        <h1 class="logo"><a href="index.jsp">Campo Verde </a></h1>
+                    </div>
+
+                    <div class="container-user">
+                        <img src="img/person-fill.svg" alt="alt" style="width: 30px"/>
+                        <div class="dropdown-content">
+                            <%if (nombreUsuario != null) {
+                            %>
+                            <div class="col-3"></div>
+                            <div class="col-2">
+                                <span>Usuario: <%= nombreUsuario %></span>
+                            </div>
+                            <% 
+                            if (rolUsuario != null) {%>
+
+                            <a href="ModificarUsuario.jsp">ModificarUsuario</a>
+                            <%switch(rolUsuario) {
+                            case 1:
+                            %>
+                            <a href="listaProductos.jsp">Productos</a>
+                            <%
                                             break;
-                                    }
-                                }%>
-                            </ul>
+                                        case 2:
+                            %>
+                            <a href="listaPedidosProv.jsp">Pedidos</a> 
+                            <%
+                                            break;
+                                        case 4:
+                            %>
+                            <a href="listaClientes.jsp">Administrador</a>    
+                            <%
+                                break;
+                            default:
+                            %>
+                            <%break;
+                    }%>
+                            <a href="Chat.jsp">Chat</a>
+                            <a href="Foros.jsp">Foro</a>
+                            <a href="CerrarSesion">Cerrar Sesión</a>
+                            <%} 
+                            %>
+                            <% 
+                            }else {
+                            %>
+                            <a href="login.jsp">Iniciar Sesión</a>
+                            <a href="login.jsp">Registrarse</a>
+                            <% 
+                                                } 
+                            %>
                         </div>
+
+
                     </div>
-                    <%} else {
-                    %>
-                    <div class="col-6"></div>
-                    <div class="col-2  text-end">
-                        <a href="login.jsp"><img src="imagenes/login.png" alt="Imagen 1"style="width:100px"></a>
-                        <a href="registro.jsp"><img src="imagenes/registrate.png" alt="Imagen 1"style="width: 100px"></a>
-                    </div>
-                    <% 
-                                        } 
-                    %>
-                    <div class="col-1">
-                        <a href="Carrito.jsp"><img src="imagenes/carrito.png" alt=""style="width: 100px"></a>
+
+                    <div class="container-user2">
+                        <a href="Carrito.jsp"><i class="fa-solid fa-basket-shopping"></i></a>
                     </div>
                 </div>
-            </nav>
-            <nav style="background: #4caf50">
-                <br>
-            </nav>
+            </div>
+
+            <div class="container-navbar">
+                <nav class="navbar container">
+                    <i class="fa-solid fa-bars"></i>
+                    <ul class="menu">
+                        <li><a href="#">Inicio</a></li>
+                        <li><a href="productos?Categorias=">Categorias</a></li>
+                        <li><a href="#destacados">Destacados</a></li>
+                        <li><a href="#Nosotros">Sobre Nosotros</a></li>
+                    </ul>
+                </nav>
+            </div>
         </header>
-        <div class="container">
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <div class="container" style="size: 100px">
             <div class="row">
                 <div class="col-6">
                     <h1>Carrito de Compras</h1>
@@ -105,7 +133,6 @@
                                 <th>Precio</th>
                                 <th>ID Categoría</th>
                                 <th>Eliminar</th> 
-                                <th>Editar</th>
                             </tr>
                         </thead>
                         <% 
@@ -137,16 +164,11 @@
                                 <td><%=producto.getIdCategoria()%></td>
                                 <td>
                                     <form action="EliminarCarrito" method="post"> 
-                                        <input type="hidden" name="idProducto" value=""> 
+                                        <input type="hidden" name="idProducto" value="<%=c.getProducto()%>"> 
                                         <button type="submit" class="btn btn-dark">Eliminar</button> 
                                     </form>
                                 </td>
-                                <td>
-                                    <form> 
-                                        <input type="hidden" name="idProducto" value="">
-                                        <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#ModalEditar">Editar</button>
-                                    </form>
-                                </td>
+
                             </tr>
                         </tbody>
                         <%total=total+producto.getPrecioProducto()*c.getCantidad();%>
@@ -156,13 +178,20 @@
                         <% } %>
                     </table>
                     <h3>Total: <%= total%></h3>
+                    <a href="productos?Categorias=?"><button class="btn btn-warning"> Seguir comprando</button></a>
                 </div>
                 <div class="col-6">
                     <br>
+                    <%if(IdUsuario!=null){%>
                     <div id="paypal-button-conteiner"></div>
+                    <%}else{%>
+                    <div class="FLogin">
+                        <a href="login.jsp">Logueate</a> para realizar la compra
+                    </div>
+
+                    <%}%>
                 </div>
                 <% }%>
-
             </div>
         </div>
         <script>

@@ -65,7 +65,7 @@ public class ProcesarAProducto extends HttpServlet {
         producto.setStockProducto(stock);
         producto.setIdCategoria(categoria);
         daoProducto.AgregarProducto(producto);
-        response.sendRedirect("paginaEmpleado.jsp");
+        response.sendRedirect("listaProductos.jsp");
         
     }
 

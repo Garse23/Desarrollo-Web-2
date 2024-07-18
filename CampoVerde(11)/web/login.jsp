@@ -54,10 +54,7 @@
 
                                 <input type="submit" value="Iniciar Sesión" class="sign-btn" />
 
-                                <p class="text">
-                                    Haz olvidado tu contraseña?
-                                    <a href="#">Pide ayuda  aquí</a>
-                                </p>
+
                             </div>
                         </form>
 
@@ -139,11 +136,7 @@
                                 </div>
                                 <input type="submit" value="Sign Up" class="sign-btn" />
 
-                                <p class="text">
-                                    By signing up, I agree to the
-                                    <a href="#">Terms of Services</a> and
-                                    <a href="#">Privacy Policy</a>
-                                </p>
+
                             </div>
                         </form>
                     </div>

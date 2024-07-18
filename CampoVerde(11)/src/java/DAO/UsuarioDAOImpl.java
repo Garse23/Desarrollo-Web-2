@@ -1,6 +1,7 @@
 package DAO;
-
+import javax.crypto.SecretKey;
 import controladores.ConexionDB;
+import java.security.MessageDigest;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -9,15 +10,20 @@ import java.util.logging.Logger;
 import modelo.Usuario;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Base64;
 import java.util.List;
+import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
 
 public class UsuarioDAOImpl implements UsuarioDAO {
 
+    String LLAVE="Encriptado";
+    
     @Override
     public void registrarUsuario(Usuario usuario) {
 
         try {
-
             PreparedStatement stmt = null;
 
             ConexionDB conexion = ConexionDB.getInstancia();
@@ -294,6 +300,37 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
         return Usuarios;
     }
+
+    @Override
+    public SecretKeySpec CrearClave(String llave) {
+        try{
+            byte [] cadena = llave.getBytes("UTF-8");
+            MessageDigest md = MessageDigest.getInstance("SHA-1");
+            cadena = md.digest(cadena);
+            cadena = Arrays.copyOf(cadena,16);
+            SecretKeySpec secretkeyspec = new SecretKeySpec(cadena, "AES");
+            return secretkeyspec;
+        }catch(Exception e){
+            return null;
+        }
+    }
+
+    @Override
+    public String Encriptar(String encriptar) {
+        try{
+            SecretKeySpec secretkeyspec = CrearClave(LLAVE);
+            Cipher cipher = Cipher.getInstance("AES");
+            cipher.init(Cipher.ENCRYPT_MODE, secretkeyspec);
+            
+            byte [] cadena = encriptar.getBytes("UTF-8");
+            byte [] encriptada = cipher.doFinal(cadena);
+            String cadena_encriptada = Base64.getEncoder().encodeToString(encriptada);
+            return cadena_encriptada;
+        }catch(Exception e){
+            return "";
+        }
+    }
+    
     
     
 

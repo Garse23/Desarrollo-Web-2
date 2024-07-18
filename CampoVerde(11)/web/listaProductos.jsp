@@ -3,6 +3,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="DAO.ProductoDAO" %>
 <%@ page import="DAO.ProductoDAOImpl" %>
+<%@ page import="modelo.Categoria" %>
 <%    Integer rolUsuario = (Integer) session.getAttribute("rolUsuario");
       String nomUsuario = (String) session.getAttribute("nombreUsuario");
 %>
@@ -67,7 +68,7 @@
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
-<% if(rolUsuario==1||rolUsuario==4){%>
+            <% if(rolUsuario==1||rolUsuario==4){%>
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#ListaEmpleado"
                    aria-expanded="true" aria-controls="collapseTwo">
@@ -187,8 +188,12 @@
                 <%
             ProductoDAO productoDAO = new ProductoDAOImpl();
             List<Producto> productos = null;
+            List<Categoria> categorias = null;
+            Producto p = new Producto();
+            p.setIdhabilitado(1);
             try {
-                productos = productoDAO.obtenerProductosHabilitados();
+                productos = productoDAO.obtenerProductos(p);
+                categorias = productoDAO.obtenerCategorias();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -231,9 +236,9 @@
                                             <td><%= producto.getStockProducto() %></td>
                                             <td><%= producto.getIdCategoria() %></td>
                                             <td>
-                                                <form action="EliminarProducto" method="post"> 
+                                                <form> 
                                                     <input type="hidden" name="idProducto" value="<%= producto.getIdProducto() %>"> 
-                                                    <button type="submit" class="btn btn-dark">Eliminar</button> 
+                                                    <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#ModalEliminar<%= producto.getIdProducto()%>">Eliminar</button> 
                                                 </form>
                                             </td>
                                             <td>
@@ -285,15 +290,15 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">¿Listo para salir?</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-body">Seleccione "Cerrar Sesión" a continuacion si esta listo para terminar su sesion actual</div>
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+                    <a class="btn btn-primary" href="CerrarSesion">Cerrar Sesión</a>
                 </div>
             </div>
         </div>
@@ -324,27 +329,28 @@
                 </div>
                 <div class="modal-body">
                     <form action="ProcesarAProducto" method="post">
-                            <div class="form-group">
-                                <label for="nombre">Nombre:</label>
-                                <input type="text" id="nombre" name="nombre" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="precio">Precio:</label>
-                                <input type="text" id="precio" name="precio" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="stock">Stock:</label>
-                                <input type="text" id="stock" name="stock" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="categoria">Categoria:</label>
-                                <select id="categoria" name="categoria" class="form-control" required>
-                                    <option value="1">Agricola</option>
-                                    <option value="2">Ganaderia</option>
-                                </select><br>
-                            </div>
-                            <button type="submit" class="btn btn-success">Añadir</button>
-                        </form>
+                        <div class="form-group">
+                            <label for="nombre">Nombre:</label>
+                            <input type="text" id="nombre" name="nombre" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="precio">Precio:</label>
+                            <input type="text" id="precio" name="precio" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="stock">Stock:</label>
+                            <input type="text" id="stock" name="stock" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="categoria">Categoria:</label>
+                            <select id="categoria" name="categoria" class="form-control" required>
+                                <% for (Categoria c : categorias) { %>
+                                <option value=<%=c.getIdCategoria()%>><%=c.getNombreCategoria()%></option>
+                                <%}%>
+                            </select><br>
+                        </div>
+                        <button type="submit" class="btn btn-success">Añadir</button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -375,11 +381,30 @@
                         <div class="form-group">
                             <label for="categoria">Categoría:</label>
                             <select id="categoria" name="categoria" class="form-control" required>
-                                <option value=1>Agrícola</option>
-                                <option value=2>Ganadería</option>
+                                <% for (Categoria c : categorias) { %>
+                                <option value=<%=c.getIdCategoria()%>><%=c.getNombreCategoria()%></option>
+                                <%}%>
                             </select><br>
                         </div>
                         <button type="submit" class="btn btn-success">Guardar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="ModalEliminar<%= producto.getIdProducto()%>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">¡Cuidado!</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="EliminarProducto" method="post">
+                        <label class="form-label">Esta seguro de eliminar: <%=producto.getNomProducto()%></label>
+                        <input type="hidden" id="idProducto" name="idProducto" value="<%=producto.getIdProducto()%>">
+                        <br>
+                        <button type="submit" class="btn btn-warning">Eliminar</button>
                     </form>
                 </div>
             </div>

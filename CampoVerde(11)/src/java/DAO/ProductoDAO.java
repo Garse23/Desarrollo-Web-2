@@ -6,7 +6,7 @@ import modelo.Producto;
 import modelo.Categoria;
 
 public interface ProductoDAO {
-    List<Producto> obtenerProductosHabilitados() throws SQLException, ClassNotFoundException;
+    List<Producto> obtenerProductos(Producto producto) throws SQLException, ClassNotFoundException;
     List<Producto> obtenerProductosPorCategoria(int categoriaId) throws SQLException, ClassNotFoundException;
     List<Producto> buscarProductosPorNombre(String nombre) throws SQLException, ClassNotFoundException;
     List<Categoria> obtenerCategorias() throws SQLException, ClassNotFoundException;

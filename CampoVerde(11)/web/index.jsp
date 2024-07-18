@@ -4,6 +4,9 @@
 <%@ page import="DAO.InformacionDAO" %>
 <%@ page import="DAO.InformacionDAOImpl" %>
 <%@ page import="java.util.List" %>
+<%@ page import="modelo.Categoria" %>
+<%@ page import="DAO.ProductoDAO" %>
+<%@ page import="DAO.ProductoDAOImpl" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -42,7 +45,7 @@
                             <% 
                             if (rolUsuario != null) {%>
                             
-                            <a href="">ModificarUsuario</a>
+                            <a href="ModificarUsuario.jsp">ModificarUsuario</a>
                             <%switch(rolUsuario) {
                             case 1:
                             %>
@@ -72,7 +75,7 @@
                             }else {
                             %>
                             <a href="login.jsp">Iniciar Sesión</a>
-                            <a href="registro.jsp">Registrarse</a>
+                            <a href="login.jsp">Registrarse</a>
                             <% 
                                                 } 
                             %>
@@ -92,7 +95,7 @@
                     <i class="fa-solid fa-bars"></i>
                     <ul class="menu">
                         <li><a href="#">Inicio</a></li>
-                        <li><a href="#">Categorias</a></li>
+                        <li><a href="productos?Categorias=">Categorias</a></li>
                         <li><a href="#destacados">Destacados</a></li>
                         <li><a href="#Nosotros">Sobre Nosotros</a></li>
                     </ul>
@@ -111,28 +114,28 @@
             <div class="content-banner">
                 <p>Primera Calidad</p>
                 <h2>Productos <br />100% Naturales</h2>
-                <a href="#">Comprar ahora</a>
+                <a href="productos?Categorias=">Comprar ahora</a>
             </div>
         </section>
 
         <main class="main-content">
             <br>
-
+<%ProductoDAO productoDAO = new ProductoDAOImpl();
+List<Categoria> categorias = null;
+try {
+                categorias = productoDAO.obtenerCategorias();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }%>
             <section class="container top-categories">
                 <h1 class="heading-1">Mejores Categorías</h1>
                 <div class="container-categories">
+                    <%for (Categoria c: categorias){%>
                     <div class="card-category category-moca">
-                        <p>Café moca</p>
-                        <span>Ver más</span>
+                        <p><%=c.getNombreCategoria()%></p>
+                        <a href="productos?Categorias=<%=c.getIdCategoria()%>"><span>Ver más</span></a>
                     </div>
-                    <div class="card-category category-expreso">
-                        <p>Expreso Americano</p>
-                        <span>Ver más</span>
-                    </div>
-                    <div class="card-category category-capuchino">
-                        <p>Capuchino</p>
-                        <span>Ver más</span>
-                    </div>
+                    <%}%>
                 </div>
             </section>
 

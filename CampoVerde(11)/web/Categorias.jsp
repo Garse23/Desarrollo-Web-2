@@ -25,7 +25,7 @@
 
                     <div class="container-logo">
                         <img src="img/logoCampo.png" style="width: 90px;" alt="">
-                        <h1 class="logo"><a href="/">Campo Verde </a></h1>
+                        <h1 class="logo"><a href="index.jsp">Campo Verde </a></h1>
                     </div>
 
                     <div class="container-user">
@@ -78,7 +78,7 @@
                     </div>
 
                     <div class="container-user2">
-                        <i class="fa-solid fa-basket-shopping"></i>
+                        <a href="Carrito.jsp"><i class="fa-solid fa-basket-shopping"></i></a>
                     </div>
                 </div>
             </div>
@@ -130,15 +130,20 @@
                 %>
                 <div class="col-sm-3 mb-4">
                     <div class="card">
-                        <div class="card-header">
-                            <h3><%= producto.getNomProducto() %></h3>
-                        </div>
-                        <div class="card-body">
-                            <label>S/<%= producto.getPrecioProducto() %></label>
-                        </div>
-                        <div class="card-footer text-center">
-                            <a href="Categorias.jsp" class="btn btn-success">Añadir al carrito</a>
-                        </div>
+                        <form action="AgregarCarrito" method="post">
+                            <div class="card-header">
+                                <h3><%= producto.getNomProducto() %></h3>
+                            </div>
+                            <div class="card-body">
+                                <label>S/<%= producto.getPrecioProducto() %></label>
+                            </div>
+                            <div class="card-footer text-center">
+                                <input type="hidden" id="idProducto" name="idProducto" value="<%=producto.getIdProducto()%>">
+                                <input type="hidden" id="cantidad" name="cantidad" value="1">
+                                <input type="hidden" id="origen" name="origen" value="Categoria">
+                                <input type="submit" class="btn btn-success" value="Añadir al carrito">
+                            </div>
+                        </form>
                     </div>
                 </div>
                 <% 

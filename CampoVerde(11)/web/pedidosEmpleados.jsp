@@ -74,8 +74,10 @@
     <%
     ProductoDAO productoDAO = new ProductoDAOImpl();
     List<Producto> productos = null;
+    Producto p = new Producto();
+    p.setIdhabilitado(1);
     try {
-        productos = productoDAO.obtenerProductosHabilitados();
+        productos = productoDAO.obtenerProductos(p);
     } catch (Exception e) {
         e.printStackTrace();
     }

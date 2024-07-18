@@ -19,7 +19,9 @@ public class ListaProductosDeshabilitados extends HttpServlet {
     private ProductoDAO productoDAO = new ProductoDAOImpl();
     
     public List<Producto> obtenerProductosDeshabilitados() throws SQLException, ClassNotFoundException {
-        return productoDAO.obtenerProductosHabilitados();
+        Producto producto = new Producto();
+        producto.setIdhabilitado(2);
+        return productoDAO.obtenerProductos(producto);
     }
 
     @Override

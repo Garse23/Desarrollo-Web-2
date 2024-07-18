@@ -9,7 +9,9 @@
     // Obtener el ID del usuario desde la sesión
     Integer idUsuarioSesion = (Integer) session.getAttribute("idUsuario");
     if (idUsuarioSesion != null) {
-        List<Usuario> usuarios = usuarioDAO.obtenerUsuariosHabilitados();
+    Usuario usuario = new Usuario();
+    usuario.setHabilitado(1);
+        List<Usuario> usuarios = usuarioDAO.obtenerUsuarios(usuario);
         for (Usuario u : usuarios) {
             if (u.getId() == idUsuarioSesion) {
                 usuarioLogeado = u;

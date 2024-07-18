@@ -58,7 +58,54 @@ public class PedidoDAOImpl implements PedidoDAO {
 
     @Override
     public void actualizarEstadoPedido(Pedido pedido) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try {
+
+            PreparedStatement stmt = null;
+
+            ConexionDB conexion = ConexionDB.getInstancia();
+            Connection conn = conexion.getConnection();
+            int estado=pedido.getIdestado();
+            try {
+                LocalDate fechaActual = LocalDate.now();
+                LocalTime horaActual = LocalTime.now();
+                
+                switch (estado) {
+                    case 1:
+                        String e = "UPDATE pedido SET idestadopedido = ?, fechaEnvioPedido = ?, horaEnvioPedido = ? WHERE (idpedido = ?);";
+                        pedido.setfEnvio(Date.valueOf(fechaActual));
+                        pedido.sethEnvio(Time.valueOf(horaActual));
+                        stmt = conn.prepareStatement(e);
+                        stmt.setInt(1, 2);
+                        stmt.setDate(2, pedido.getfEnvio());
+                        stmt.setTime(3, pedido.gethEnvio());
+                        stmt.setInt(4, pedido.getId());
+                        stmt.executeUpdate();
+                        break;
+                    case 2:
+                        String r = "UPDATE pedido SET idestadopedido = ?, fechaRecibidoPedido = ?, horaRecibidoPedido = ? WHERE (idpedido = ?);";
+                        pedido.setfRecibido(Date.valueOf(fechaActual));
+                        pedido.sethRecibido(Time.valueOf(horaActual));
+                        stmt = conn.prepareStatement(r);
+                        stmt.setInt(1, 3);
+                        stmt.setDate(2, pedido.getfRecibido());
+                        stmt.setTime(3, pedido.gethRecibido());
+                        stmt.setInt(4, pedido.getId());
+                        stmt.executeUpdate();
+                        break;
+                    default:
+                        throw new AssertionError();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+                // Manejo de errores si es necesario
+            } finally {
+
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(UsuarioDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override

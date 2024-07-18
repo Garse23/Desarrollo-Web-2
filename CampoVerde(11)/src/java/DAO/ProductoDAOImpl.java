@@ -15,15 +15,16 @@ import modelo.Producto;
 public class ProductoDAOImpl implements ProductoDAO {
 
     @Override
-    public List<Producto> obtenerProductosHabilitados() throws SQLException, ClassNotFoundException {
+    public List<Producto> obtenerProductos(Producto prd) throws SQLException, ClassNotFoundException {
         PreparedStatement stmt = null;
         ResultSet rs = null;
         List<Producto> productos = new ArrayList<>();
         ConexionDB conexion = ConexionDB.getInstancia();
         Connection conn = conexion.getConnection();
         try {
-            String sql = "SELECT idProducto, nomProducto, precioProducto, stockProducto, idCategoria FROM producto WHERE idHabilitado=1";
+            String sql = "SELECT idProducto, nomProducto, precioProducto, stockProducto, idCategoria FROM producto WHERE idHabilitado=?";
             stmt = conn.prepareStatement(sql);
+            stmt.setInt(1,prd.getIdhabilitado());
             rs = stmt.executeQuery();
 
             while (rs.next()) {
@@ -235,45 +236,7 @@ public class ProductoDAOImpl implements ProductoDAO {
         }
     }
 
-    public List<Producto> obtenerProductosDeshabilitados() throws SQLException, ClassNotFoundException {
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-        List<Producto> productos = new ArrayList<>();
-        ConexionDB conexion = ConexionDB.getInstancia();
-        Connection conn = conexion.getConnection();
-        try {
-            String sql = "SELECT idProducto, nomProducto, precioProducto, stockProducto, idCategoria FROM producto WHERE idHabilitado=2";
-            stmt = conn.prepareStatement(sql);
-            rs = stmt.executeQuery();
-
-            while (rs.next()) {
-                int idProducto = rs.getInt("idProducto");
-                String nomProducto = rs.getString("nomProducto");
-                double precioProducto = rs.getDouble("precioProducto");
-                int stockProducto = rs.getInt("stockProducto");
-                int idCategoria = rs.getInt("idCategoria");
-
-                // Agrega declaraciones de impresión para verificar los valores obtenidos de la base de datos
-                System.out.println("ID del producto: " + idProducto);
-                System.out.println("Nombre del producto: " + nomProducto);
-                System.out.println("Precio del producto: " + precioProducto);
-                System.out.println("Stock del producto: " + stockProducto);
-                System.out.println("ID de la categoría: " + idCategoria);
-
-                Producto producto = new Producto(idProducto, nomProducto, precioProducto, stockProducto, idCategoria);
-                productos.add(producto);
-            }
-        } finally {
-            if (rs != null) {
-                rs.close();
-            }
-            if (stmt != null) {
-                stmt.close();
-            }
-        }
-
-        return productos;
-    }
+    
 
     @Override
     public List<Producto> obtenerProductosPorCategoria(int categoriaId) throws SQLException, ClassNotFoundException {

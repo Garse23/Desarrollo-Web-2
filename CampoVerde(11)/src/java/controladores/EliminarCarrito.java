@@ -7,12 +7,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import modelo.Carrito;
 
-@WebServlet(name = "AgregarCarrito", urlPatterns = {"/AgregarCarrito"})
-public class AgregarCarrito extends HttpServlet {
+@WebServlet(name = "EliminarCarrito", urlPatterns = {"/EliminarCarrito"})
+public class EliminarCarrito extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -23,36 +23,17 @@ public class AgregarCarrito extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int idProducto = Integer.parseInt(request.getParameter("idProducto"));
-        int Cantidad = Integer.parseInt(request.getParameter("cantidad"));
-        String origen = request.getParameter("origen");
         HttpSession session = request.getSession();
-
         List<Carrito> carrito = (List<Carrito>) session.getAttribute("carrito");
-
-        if (carrito == null) {
-            carrito = new ArrayList<>();
-        }
-        boolean lista = false;
-        for (Carrito c : carrito) {
+        Iterator<Carrito> iterator = carrito.iterator();
+        while (iterator.hasNext()) {
+            Carrito c = iterator.next();
             if (idProducto == c.getProducto()) {
-                c.setCantidad(c.getCantidad() + Cantidad);
-                lista = true;
+                iterator.remove();
                 break;
             }
         }
-        if(!lista){
-        carrito.add(new Carrito(idProducto, Cantidad));
-        }
-        session.setAttribute("carrito", carrito);
-        switch (origen) {
-            case "index":
-                response.sendRedirect("index.jsp");
-                break;
-            case "Categoria":
-                response.sendRedirect("productos?Categorias=?");
-                break;
-            default:
-                ;
-        }
+        response.sendRedirect("Carrito.jsp");
     }
+
 }

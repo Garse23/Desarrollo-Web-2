@@ -53,8 +53,9 @@ public class ProcesarVenta extends HttpServlet {
         HttpSession session = request.getSession();
         List<Carrito> carrito = (List<Carrito>) session.getAttribute("carrito");
         Integer IdUsuario = (Integer) session.getAttribute("idUsuario");
+        System.out.println(IdUsuario);
         if (IdUsuario == null) {
-            System.out.println("Usuario no logueado");
+            response.sendRedirect("Carrito.jsp?alert=UsuarioNoLogueado");
         } else {
             venta.setIdUsuario(IdUsuario);
 

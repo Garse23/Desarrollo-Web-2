@@ -233,8 +233,8 @@
                                             <th>DNI</th>
                                             <th>Correo</th>
                                             <th>Contraseña</th>
-                                            <th>Editar</th>
                                             <th>Eliminar</th>
+                                            <th>Editar</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -252,7 +252,7 @@
                                             <td>
                                                 <form action="EliminarCliente" method="post"> 
                                                     <input type="hidden" name="idProducto" value="<%=c.getID()%>"> 
-                                                    <button type="submit" class="btn btn-dark">Eliminar</button> 
+                                                    <button type="submit" class="btn btn-dark" disabled="">Eliminar</button> 
                                                 </form>
                                             </td>
                                             <td>
@@ -306,15 +306,15 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">¿Listo para salir?</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-body">Seleccione "Cerrar Sesión" a continuacion si esta listo para terminar su sesion actual</div>
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+                    <a class="btn btn-primary" href="CerrarSesion">Cerrar Sesión</a>
                 </div>
             </div>
         </div>
@@ -371,6 +371,8 @@
         </div>
     </div>
     <% for (Cliente c : clientes) { %>
+    <% for (Usuario u : usuarios) { %>
+    <% if (c.getUsuario()==u.getId()) {%>
     <div class="modal fade" id="ModalEditar<%= c.getID()%>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -383,22 +385,23 @@
                         <input type="hidden" name="idProducto" id="idProducto" value="<%= c.getID()%>">
                         <div class="form-group">
                             <label for="nombre">Nombre:</label>
-                            <input type="text" id="nombre" name="nombre" class="form-control" value="<%= c.getID()%>" required><br>
+                            <input type="text" id="nombre" name="nombre" class="form-control" value="<%= c.getNombre()%>" required><br>
                         </div>
                         <div class="form-group">
-                            <label for="precio">Precio:</label>
-                            <input type="text" id="precio" name="precio" class="form-control" value="<%= c.getID()%>" required><br>
+                            <label for="precio">Telefono:</label>
+                            <input type="text" id="telefono" name="telefono" class="form-control" value="<%= c.getTelefono()%>" required><br>
                         </div>
                         <div class="form-group">
-                            <label for="stock">Stock:</label>
-                            <input type="text" id="stock" name="stock" class="form-control" value="<%= c.getID()%>" required><br>
+                            <label for="stock">DNI:</label>
+                            <input type="text" id="dni" name="dni" class="form-control" value="<%= c.getDNI()%>" required><br>
                         </div>
                         <div class="form-group">
-                            <label for="categoria">Categoría:</label>
-                            <select id="categoria" name="categoria" class="form-control" required>
-                                <option value=1>Agrícola</option>
-                                <option value=2>Ganadería</option>
-                            </select><br>
+                            <label for="stock">Correo:</label>
+                            <input type="text" id="correo" name="correo" class="form-control" value="<%= u.getCorreo()%>" required><br>
+                        </div>
+                        <div class="form-group">
+                            <label for="stock">Constraseña:</label>
+                            <input type="text" id="contrasena" name="contrasena" class="form-control" value="<%= u.getContrasena()%>" required><br>
                         </div>
                         <button type="submit" class="btn btn-success">Guardar</button>
                     </form>
@@ -406,7 +409,7 @@
             </div>
         </div>
     </div>
-    <% } %>
+    <% }}} %>
 </body>
 <%}%>
 </html>

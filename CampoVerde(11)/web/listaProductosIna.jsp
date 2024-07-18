@@ -186,8 +186,10 @@
                 <%
             ProductoDAO productoDAO = new ProductoDAOImpl();
             List<Producto> productos = null;
+            Producto p = new Producto();
+            p.setIdhabilitado(2);
             try {
-                productos = productoDAO.obtenerProductosDeshabilitados();
+                productos = productoDAO.obtenerProductos(p);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -276,15 +278,15 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">¿Listo para salir?</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-body">Seleccione "Cerrar Sesión" a continuacion si esta listo para terminar su sesion actual</div>
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+                    <a class="btn btn-primary" href="CerrarSesion">Cerrar Sesión</a>
                 </div>
             </div>
         </div>
